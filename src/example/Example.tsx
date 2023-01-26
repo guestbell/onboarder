@@ -9,7 +9,8 @@ export interface ExampleProps {
 type OnboarderState = {
   firstStep: never;
   loopStep: { counter: number; isDirty: boolean };
-  afterLoopStep: { message: string };
+  afterLoopStep: never;
+  textStep: { message: string };
   finalStep: { checkBox: boolean };
 };
 
@@ -41,7 +42,30 @@ const steps: Steps<OnboarderState> = {
       <>{nextStep === "loopStep" ? "We are looping" : "We're done looping."}</>
     ),
   },
-  finalStep: { Component: () => <>Final step</> },
+  textStep: {
+    Component: ({ setState, state }) => (
+      <>
+        <input
+          value={state.message}
+          onChange={(e) => setState({ ...state, message: e.target.value })}
+        />
+        <br />
+        Message: {state.message}
+      </>
+    ),
+  },
+  finalStep: {
+    Component: ({ setState, state }) => (
+      <>
+        Final step:{" "}
+        <input
+          type="checkbox"
+          checked={state.checkBox}
+          onChange={(e) => setState({ ...state, checkBox: e.target.checked })}
+        />
+      </>
+    ),
+  },
 };
 
 const structure: Structure<OnboarderState> = {
@@ -53,7 +77,10 @@ const structure: Structure<OnboarderState> = {
   },
   afterLoopStep: {
     nextStep: (state) =>
-      state.loopStep?.counter < 3 ? "loopStep" : "finalStep",
+      state.loopStep?.counter < 3 ? "loopStep" : "textStep",
+  },
+  textStep: {
+    nextStep: (state) => (state.textStep?.message ? "finalStep" : undefined),
   },
 };
 
