@@ -1,6 +1,6 @@
 import * as React from "react";
 import Onboarder, { Steps, Structure } from "../components/onboarder/Onboarder";
-import StepContainer from "../components/stepContainer/StepContainer";
+import StepContainer from "./stepContainer/StepContainer";
 
 export interface ExampleProps {
   debug?: boolean;
@@ -8,10 +8,10 @@ export interface ExampleProps {
 
 type OnboarderState = {
   firstStep: never;
-  loopStep: { counter: number; isDirty: boolean };
+  loopStep: { counter: number; isDirty: boolean; errorMessage?: string };
   afterLoopStep: never;
   textStep: { message: string };
-  finalStep: { checkBox: boolean };
+  finalStep: never;
 };
 
 const steps: Steps<OnboarderState> = {
@@ -20,6 +20,7 @@ const steps: Steps<OnboarderState> = {
     Component: ({ setState, state }) => (
       <>
         <div>Loop step</div>
+        {state.errorMessage && <div>Error: {state.errorMessage}</div>}
         <button
           onClick={() =>
             setState({ ...state, counter: state.counter + 1, isDirty: true })
@@ -34,7 +35,17 @@ const steps: Steps<OnboarderState> = {
       isDirty: false,
     },
     afterNext: ({ state, setState }) => {
-      setState({ ...state, isDirty: false });
+      setState({ ...state, isDirty: false, errorMessage: undefined });
+    },
+    beforeNext: ({ state, setState }) => {
+      if (state.counter < 2) {
+        setState({
+          ...state,
+          errorMessage: "Increment to at least 2 because rules",
+        });
+        return false;
+      }
+      return true;
     },
   },
   afterLoopStep: {
@@ -53,18 +64,12 @@ const steps: Steps<OnboarderState> = {
         Message: {state.message}
       </>
     ),
+    initialState: {
+      message: "",
+    },
   },
   finalStep: {
-    Component: ({ setState, state }) => (
-      <>
-        Final step:{" "}
-        <input
-          type="checkbox"
-          checked={state.checkBox}
-          onChange={(e) => setState({ ...state, checkBox: e.target.checked })}
-        />
-      </>
-    ),
+    Component: () => <>All done!!!</>,
   },
 };
 

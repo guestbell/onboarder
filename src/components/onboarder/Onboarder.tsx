@@ -1,7 +1,7 @@
 import {
   StepContainerComponent,
   StepContainerComponentProps,
-} from "../../components/stepContainer/StepContainer";
+} from "../../example/stepContainer/StepContainer";
 import * as React from "react";
 import { MainContextProvider } from "../../context/MainContext";
 import JSONDebugger from "../../components/debug/JSONDebugger";
@@ -21,14 +21,15 @@ export type HookConfig<TState extends {}, TStepState> = {
   setState: (state: TStepState) => void;
 };
 
-export type HookType<TState extends {}, TStepState> = (
+export type HookType<TState extends {}, TStepState, TRet> = (
   config: HookConfig<TState, TStepState>
-) => void;
+) => TRet | Promise<TRet>;
 
 export type Step<TState extends {}, TStepState> = {
   Component: StepComponent<TState, TStepState>;
   initialState?: TStepState;
-  afterNext?: HookType<TState, TStepState>;
+  afterNext?: HookType<TState, TStepState, void>;
+  beforeNext?: HookType<TState, TStepState, boolean>;
 };
 
 export type Steps<TState extends {}> = {
@@ -118,24 +119,33 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
       : nextStep(state)
     : undefined;
   const hasNextStep = Boolean(interpolatedNextStep);
-  const goToNextStep = React.useCallback(() => {
-    if (interpolatedNextStep) {
-      setCurrentStep(interpolatedNextStep);
-      setJourneyPosition(journeyPosition + 1);
-      setJourney(
-        journey.slice(0, journeyPosition + 1).concat(interpolatedNextStep)
-      );
-      currentStepInstance?.afterNext?.({
-        state: selectedState,
-        setState: setState,
-      });
-    }
-  }, [
-    interpolatedNextStep,
-    currentStepInstance?.afterNext,
-    selectedState,
-    setState,
-  ]);
+  const goToStep = React.useCallback(
+    (step: keyof TState | undefined) => {
+      if (step) {
+        const possibleRet =
+          currentStepInstance?.beforeNext?.({
+            state: selectedState,
+            setState: setState,
+          }) ?? true;
+        Promise.resolve(possibleRet).then((ret) => {
+          if (ret) {
+            setJourneyPosition(journeyPosition + 1);
+            setJourney(journey.slice(0, journeyPosition + 1).concat(step));
+            setCurrentStep(step);
+            currentStepInstance?.afterNext?.({
+              state: selectedState,
+              setState: setState,
+            });
+          }
+        });
+      }
+    },
+    [currentStepInstance?.afterNext, selectedState, setState]
+  );
+  const goToNextStep = React.useCallback(
+    () => goToStep(interpolatedNextStep),
+    [interpolatedNextStep, goToStep]
+  );
   const hasPreviousStep = journeyPosition > 0;
   const goToPreviousStep = React.useCallback(() => {
     if (hasPreviousStep) {
@@ -151,13 +161,13 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
   const StepContainerFinal = StepContainer ?? React.Fragment;
   const sharedProps = {
     currentStep,
-    setCurrentStep,
     hasNextStep,
     nextStep: interpolatedNextStep,
     goToNextStep,
     reset,
     hasPreviousStep,
     goToPreviousStep,
+    goToStep,
   };
   return (
     <MainContextProvider value={state}>

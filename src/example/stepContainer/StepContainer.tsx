@@ -2,7 +2,7 @@ import * as React from "react";
 
 export type StepContainerComponentProps<TState extends {}> = {
   currentStep: keyof TState;
-  setCurrentStep: (step: keyof TState) => void;
+  goToStep: (step: keyof TState) => void;
   hasNextStep: boolean;
   goToNextStep: () => void;
   hasPreviousStep: boolean;
@@ -31,7 +31,7 @@ function StepContainer<TState extends {}>(
   return (
     <div>
       {children}
-      <div>
+      <div style={{ marginTop: "1rem" }}>
         <button onClick={reset}>Reset</button>
         <button onClick={goToPreviousStep} disabled={!hasPreviousStep}>
           Previous
