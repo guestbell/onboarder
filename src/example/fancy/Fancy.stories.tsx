@@ -1,16 +1,17 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Example } from "./Example";
+import { Fancy } from "./Fancy";
 
 export default {
-  title: "Example",
-  component: Example,
-} as ComponentMeta<typeof Example>;
+  title: "Fancy",
+  component: Fancy,
+  parameters: {
+    layout: "fullscreen",
+  },
+} as ComponentMeta<typeof Fancy>;
 
-const Template: ComponentStory<typeof Example> = (args) => (
-  <Example {...args} />
-);
+const Template: ComponentStory<typeof Fancy> = (args) => <Fancy {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};

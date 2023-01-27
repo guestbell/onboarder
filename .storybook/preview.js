@@ -1,3 +1,13 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { theme } from "../src/example/material-ui/theme";
+
+export const withMuiTheme = (Story) => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Story />
+  </ThemeProvider>
+);
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -6,4 +16,6 @@ export const parameters = {
       date: /Date$/,
     },
   },
-}
+};
+
+export const decorators = [withMuiTheme];

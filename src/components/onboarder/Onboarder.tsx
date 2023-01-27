@@ -1,62 +1,19 @@
 import {
   StepContainerComponent,
   StepContainerComponentProps,
-} from "../../example/stepContainer/StepContainer";
+} from "../../types/StepContainer";
 import * as React from "react";
 import { MainContextProvider } from "../../context/MainContext";
 import JSONDebugger from "../../components/debug/JSONDebugger";
+import { Steps } from "../../types/Step";
+import { Structure } from "../../types/Structure";
+import { findShortestPathMultipleEndNodes, Graph } from "../../utils/dijkstra";
+import { ContainerProps } from "@mui/material";
 
-export type StepComponentProps<TState extends {}, TStepState> =
-  StepContainerComponentProps<TState> & {
-    state: TStepState;
-    setState: (state: TStepState) => void;
-  };
-
-export type StepComponent<TState extends {}, TStepState> = React.ComponentType<
-  StepComponentProps<TState, TStepState>
->;
-
-export type HookConfig<TState extends {}, TStepState> = {
-  state: TStepState;
-  setState: (state: TStepState) => void;
-};
-
-export type HookType<TState extends {}, TStepState, TRet> = (
-  config: HookConfig<TState, TStepState>
-) => TRet | Promise<TRet>;
-
-export type Step<TState extends {}, TStepState> = {
-  Component: StepComponent<TState, TStepState>;
-  initialState?: TStepState;
-  afterNext?: HookType<TState, TStepState, void>;
-  beforeNext?: HookType<TState, TStepState, boolean>;
-};
-
-export type Steps<TState extends {}> = {
-  [key in keyof TState]: Step<TState, TState[key]>;
-};
-
-export type NextStepFunc<TState extends {}> = (
-  state: TState
-) => keyof TState | undefined;
-
-export type NextStepType<TState extends {}> =
-  | string
-  | NextStepFunc<TState>
-  | undefined;
-
-export type StructureItem<TState extends {}> = {
-  nextStep: NextStepType<TState>;
-};
-
-export type Structure<TState extends {}> = {
-  [key in keyof TState]?: StructureItem<TState>;
-};
-
-export interface OnboarderProps<TState extends {}> {
-  steps: Steps<TState>;
+export interface OnboarderProps<TState extends {}, TExtraStepProps extends {}> {
+  steps: Steps<TState, TExtraStepProps>;
   initialStep: keyof TState;
-  finalStep: keyof TState;
+  finalSteps: (keyof TState)[];
   structure: Structure<TState>;
   StepContainer?: StepContainerComponent<TState>;
   // to be removed
@@ -69,8 +26,17 @@ type Setters<T> = {
 
 export type ResetAction = { type: "reset"; value: never };
 
-export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
-  const { steps, initialStep, structure, StepContainer, debug = false } = props;
+export function Onboarder<TState extends {}, TExtraStepProps extends {}>(
+  props: OnboarderProps<TState, TExtraStepProps>
+) {
+  const {
+    steps,
+    initialStep,
+    finalSteps,
+    structure,
+    StepContainer,
+    debug = false,
+  } = props;
   const [currentStep, setCurrentStep] = React.useState(initialStep);
   const [journey, setJourney] = React.useState<(keyof TState)[]>([initialStep]);
   const [journeyPosition, setJourneyPosition] = React.useState(0);
@@ -112,13 +78,16 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
       dispatch({ type: currentStep, value: _state }),
     [currentStep]
   );
-  const nextStep = structure?.[currentStep]?.nextStep;
-  const interpolatedNextStep = nextStep
-    ? typeof nextStep === "string"
-      ? (nextStep as keyof TState)
-      : nextStep(state)
+  const nextSteps: { [key in keyof TState]?: number | null } =
+    structure?.[currentStep]?.(state) ?? {};
+  const nextStepsKeys = Object.keys(nextSteps) as (keyof TState)[];
+  const nextStep = nextStepsKeys.length
+    ? nextStepsKeys.reduce((a, b) =>
+        (nextSteps[a] ?? Infinity) > (nextSteps[b] ?? Infinity) ? b : a
+      )
     : undefined;
-  const hasNextStep = Boolean(interpolatedNextStep);
+
+  const hasNextStep = Boolean(nextStep);
   const goToStep = React.useCallback(
     (step: keyof TState | undefined) => {
       if (step) {
@@ -143,12 +112,19 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
     [currentStepInstance?.afterNext, selectedState, setState]
   );
   const goToNextStep = React.useCallback(
-    () => goToStep(interpolatedNextStep),
-    [interpolatedNextStep, goToStep]
+    () => goToStep(nextStep),
+    [nextStep, goToStep]
   );
-  const hasPreviousStep = journeyPosition > 0;
-  const goToPreviousStep = React.useCallback(() => {
-    if (hasPreviousStep) {
+  const hasRedoStep = journeyPosition < journey.length - 1;
+  const goToRedoStep = React.useCallback(() => {
+    if (hasRedoStep) {
+      setJourneyPosition(journeyPosition + 1);
+      setCurrentStep(journey[journeyPosition + 1]);
+    }
+  }, [journey, journeyPosition]);
+  const hasUndoStep = journeyPosition > 0;
+  const goToUndoStep = React.useCallback(() => {
+    if (hasUndoStep) {
       setJourneyPosition(journeyPosition - 1);
       setCurrentStep(journey[journeyPosition - 1]);
     }
@@ -159,15 +135,44 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
     setJourney([initialStep]);
   }, [initialStep]);
   const StepContainerFinal = StepContainer ?? React.Fragment;
-  const sharedProps = {
+  const shortestPath = React.useMemo(
+    () =>
+      findShortestPathMultipleEndNodes(
+        (Object.keys(structure) as (keyof TState)[]).reduce((prev, current) => {
+          const val: { [key in keyof TState]?: number | null } =
+            structure[current]?.(state) ?? {};
+
+          return {
+            ...prev,
+            [current]: (Object.keys(val) as (keyof TState)[]).reduce(
+              (prev, current) => ({ ...prev, [current]: val[current] ?? 1 }),
+              {}
+            ),
+          };
+        }, {} as Graph<TState>),
+        journey[journey.length - 1],
+        finalSteps
+      ),
+    [journey[journey.length - 1], finalSteps, structure, state]
+  );
+  const sharedProps: StepContainerComponentProps<TState, TExtraStepProps> = {
     currentStep,
     hasNextStep,
-    nextStep: interpolatedNextStep,
+    nextStep,
     goToNextStep,
     reset,
-    hasPreviousStep,
-    goToPreviousStep,
+    hasUndoStep,
+    goToUndoStep,
+    hasRedoStep,
+    goToRedoStep,
     goToStep,
+    steps,
+    journey,
+    journeyPosition,
+    initialStep,
+    finalSteps,
+    shortestStepsRemaining: shortestPath?.distance,
+    shortestRemainingJourney: shortestPath.path,
   };
   return (
     <MainContextProvider value={state}>
@@ -185,7 +190,7 @@ export function Onboarder<TState extends {}>(props: OnboarderProps<TState>) {
             journeyPosition,
             currentStep,
             state,
-            nextStep: interpolatedNextStep,
+            nextStep: nextStep,
           }}
         />
       )}

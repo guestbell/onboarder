@@ -1,8 +1,8 @@
 import * as React from "react";
-import Onboarder, { Steps, Structure } from "../components/onboarder/Onboarder";
-import StepContainer from "./stepContainer/StepContainer";
+import { Steps, Structure, Onboarder } from "../..";
+import SimpleStepContainer from "./stepContainer/SimpleStepContainer";
 
-export interface ExampleProps {
+export interface SimpleProps {
   debug?: boolean;
 }
 
@@ -74,32 +74,32 @@ const steps: Steps<OnboarderState> = {
 };
 
 const structure: Structure<OnboarderState> = {
-  firstStep: {
-    nextStep: "loopStep",
-  },
-  loopStep: {
-    nextStep: (state) => (state.loopStep.isDirty ? "afterLoopStep" : undefined),
-  },
-  afterLoopStep: {
-    nextStep: (state) =>
-      state.loopStep?.counter < 3 ? "loopStep" : "textStep",
-  },
-  textStep: {
-    nextStep: (state) => (state.textStep?.message ? "finalStep" : undefined),
-  },
+  firstStep: () => ({ loopStep: 1 }),
+  loopStep: (state) => ({
+    afterLoopStep: state.loopStep.isDirty ? 1 : undefined,
+  }),
+  afterLoopStep: (state) => ({
+    loopStep: state.loopStep?.counter < 3 ? 1 : undefined,
+    textStep: state.loopStep?.counter >= 3 ? 1 : undefined,
+  }),
+  textStep: (state) => ({
+    finalStep: (state.textStep?.message && 1) || undefined,
+  }),
 };
 
-export const Example: React.FC<ExampleProps> = ({ debug }) => {
+const finalSteps: (keyof OnboarderState)[] = ["finalStep"];
+
+export const Simple: React.FC<SimpleProps> = ({ debug }) => {
   return (
     <Onboarder
       steps={steps}
       initialStep="firstStep"
-      finalStep="finalStep"
+      finalSteps={finalSteps}
       structure={structure}
-      StepContainer={StepContainer}
+      StepContainer={SimpleStepContainer}
       debug={debug}
     />
   );
 };
 
-export default Example;
+export default Simple;
