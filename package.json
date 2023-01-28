@@ -10,7 +10,7 @@
     "test": "jest",
     "api-docs": "typedoc --plugin typedoc-plugin-markdown --out api-docs src/index.ts",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o docs -s ./src/stories/assets",
+    "build-storybook": "build-storybook -o docs",
     "build": "rollup -c",
     "version:patch": "npm version patch",
     "push:git": "git push --tags origin main --quiet",

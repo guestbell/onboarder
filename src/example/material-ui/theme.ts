@@ -10,4 +10,29 @@ export const theme = createTheme({
       primary: "#342953",
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "capitalize",
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: { position: "absolute", top: "calc(100% - 2px)", right: 0 },
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: (theme) => ({
+        code: {
+          fontFamily: "monospace",
+          // color: theme.palette.primary.main,
+          backgroundColor: theme.palette.grey[200],
+          padding: 3,
+          borderRadius: 5,
+        },
+      }),
+    },
+  },
 });

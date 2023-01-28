@@ -185,10 +185,10 @@ function SimpleStepContainer<TState extends {}>(
 7. Done!
 You can see this example on [github](https://github.com/guestbell/onboarder/blob/main/src/example/simple/Simple.tsx)
 
-#API
-[Here](https://github.com/guestbell/onboarder/api-docs/modules.md)
+# API
+[Here](https://github.com/guestbell/onboarder/blob/main/api-docs/modules.md)
 
-#FAQ
+# FAQ
 ## How can I add my extra props to the step?
 Notice that ```Steps``` has 2 generic parameters. First is the type of the state, you can use the second generic parameter to introduce extra props to your step.
 

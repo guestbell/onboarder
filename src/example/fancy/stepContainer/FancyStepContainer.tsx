@@ -21,6 +21,10 @@ export type ExtraStepProps = {
   subtitle?: React.ReactNode;
 };
 
+function capitalizeFirstLetter(v: string) {
+  return v.charAt(0).toUpperCase() + v.substring(1);
+}
+
 function FancyStepContainer<TState extends {}>(
   props: React.PropsWithChildren<
     StepContainerComponentProps<TState, ExtraStepProps>
@@ -94,7 +98,7 @@ function FancyStepContainer<TState extends {}>(
                       )
                     }
                     sx={{
-                      color: index !== journeyPosition ? "#D1EAF6" : undefined,
+                      opacity: index !== journeyPosition ? 0.5 : undefined,
                     }}
                   >
                     {step.title}
@@ -137,7 +141,12 @@ function FancyStepContainer<TState extends {}>(
           maxHeight="100vh"
         >
           {!currentStepInstance?.hideUi ? (
-            <Box padding={2} paddingBottom={0} textAlign="center">
+            <Box
+              padding={2}
+              paddingBottom={0}
+              marginBottom={4}
+              textAlign="center"
+            >
               <Typography variant="caption" color="#bfbfbf">
                 <IconButton onClick={goToUndoStep} disabled={!hasUndoStep}>
                   <KeyboardArrowLeft />
@@ -151,8 +160,10 @@ function FancyStepContainer<TState extends {}>(
               <br />
               {remainingTimeSec ? (
                 <Typography variant="caption">
-                  Around {duration(remainingTimeSec, "second").humanize()} to
-                  finish
+                  {capitalizeFirstLetter(
+                    duration(remainingTimeSec, "second").humanize()
+                  )}{" "}
+                  to finish
                 </Typography>
               ) : null}
               <Typography variant="h3">{currentStepInstance.title}</Typography>
@@ -163,7 +174,7 @@ function FancyStepContainer<TState extends {}>(
               )}
             </Box>
           ) : null}
-          <Box padding={2} paddingTop={0} overflow="auto">
+          <Box padding={2} paddingX={6} overflow="auto" flex={1}>
             {children}
           </Box>
           {!currentStepInstance?.hideUi ? (
@@ -178,6 +189,7 @@ function FancyStepContainer<TState extends {}>(
                 onClick={goToNextStep}
                 disabled={!hasNextStep}
                 variant="contained"
+                disableElevation={true}
               >
                 Continue
                 <ArrowForward />

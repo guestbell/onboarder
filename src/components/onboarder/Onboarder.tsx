@@ -3,7 +3,7 @@ import {
   StepContainerComponentProps,
 } from "../../types/StepContainer";
 import * as React from "react";
-import { MainContextProvider } from "../../context/MainContext";
+import { StateContextProvider } from "../../context/StateContext";
 import JSONDebugger from "../../components/debug/JSONDebugger";
 import { Steps } from "../../types/Step";
 import { Structure } from "../../types/Structure";
@@ -23,7 +23,7 @@ type Setters<T> = {
   [P in keyof T]-?: T[P];
 };
 
-export type ResetAction = { type: "reset"; value: never };
+export type ResetAction = { type: "reset"; value?: never };
 
 export function Onboarder<
   TState extends {} = {},
@@ -80,11 +80,19 @@ export function Onboarder<
   );
   const nextSteps: { [key in keyof TState]?: number | null } =
     structure?.[currentStep]?.(state) ?? {};
-  const nextStepsKeys = Object.keys(nextSteps) as (keyof TState)[];
+  const nextStepsKeys = (Object.keys(nextSteps) as (keyof TState)[]).filter(
+    (a) => nextSteps[a]
+  );
   const nextStep = nextStepsKeys.length
-    ? nextStepsKeys.reduce((a, b) =>
-        (nextSteps[a] ?? Infinity) > (nextSteps[b] ?? Infinity) ? b : a
-      )
+    ? nextStepsKeys.reduce((a, b) => {
+        if (!nextSteps[a]) {
+          return b;
+        }
+        if (!nextSteps[b]) {
+          return a;
+        }
+        return (nextSteps[a] ?? Infinity) > (nextSteps[b] ?? Infinity) ? b : a;
+      })
     : undefined;
 
   const hasNextStep = Boolean(nextStep);
@@ -133,6 +141,7 @@ export function Onboarder<
     setCurrentStep(initialStep);
     setJourneyPosition(0);
     setJourney([initialStep]);
+    dispatch({ type: "reset" });
   }, [initialStep]);
   const StepContainerFinal = StepContainer ?? React.Fragment;
   const shortestPath = React.useMemo(
@@ -183,7 +192,7 @@ export function Onboarder<
     remainingTimeSec,
   };
   return (
-    <MainContextProvider value={state}>
+    <StateContextProvider value={state}>
       <StepContainerFinal {...sharedProps}>
         <CurrentComponent
           state={state[currentStep]}
@@ -194,15 +203,12 @@ export function Onboarder<
       {debug && (
         <JSONDebugger
           value={{
-            journey,
-            journeyPosition,
-            currentStep,
+            ...sharedProps,
             state,
-            nextStep: nextStep,
           }}
         />
       )}
-    </MainContextProvider>
+    </StateContextProvider>
   );
 }
 

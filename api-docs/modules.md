@@ -28,13 +28,14 @@
 
 ### Variables
 
-- [MainContext](modules.md#maincontext)
+- [StateContext](modules.md#statecontext)
 
 ### Functions
 
-- [MainContextConsumer](modules.md#maincontextconsumer)
-- [MainContextProvider](modules.md#maincontextprovider)
 - [Onboarder](modules.md#onboarder)
+- [StateContextConsumer](modules.md#statecontextconsumer)
+- [StateContextProvider](modules.md#statecontextprovider)
+- [useGlobalState](modules.md#useglobalstate)
 
 ## References
 
@@ -64,7 +65,7 @@ Renames and re-exports [Onboarder](modules.md#onboarder)
 
 #### Defined in
 
-[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L21)
+[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L21)
 
 ___
 
@@ -96,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L26)
+[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L26)
 
 ___
 
@@ -127,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/077a827/src/types/Structure.ts#L1)
+[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Structure.ts#L1)
 
 ___
 
@@ -140,11 +141,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `type` | ``"reset"`` |
-| `value` | `never` |
+| `value?` | `never` |
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:26](https://github.com/guestbell/onboarder/blob/077a827/src/components/onboarder/Onboarder.tsx#L26)
+[src/components/onboarder/Onboarder.tsx:26](https://github.com/guestbell/onboarder/blob/8559c04/src/components/onboarder/Onboarder.tsx#L26)
 
 ___
 
@@ -162,7 +163,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L30)
+[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L30)
 
 ___
 
@@ -180,7 +181,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L13)
+[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L13)
 
 ___
 
@@ -198,7 +199,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L4)
+[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L4)
 
 ___
 
@@ -215,7 +216,7 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:27](https://github.com/guestbell/onboarder/blob/077a827/src/types/StepContainer.ts#L27)
+[src/types/StepContainer.ts:27](https://github.com/guestbell/onboarder/blob/8559c04/src/types/StepContainer.ts#L27)
 
 ___
 
@@ -255,7 +256,7 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/077a827/src/types/StepContainer.ts#L3)
+[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/8559c04/src/types/StepContainer.ts#L3)
 
 ___
 
@@ -272,7 +273,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/077a827/src/types/Step.ts#L38)
+[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Step.ts#L38)
 
 ___
 
@@ -288,63 +289,19 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/077a827/src/types/Structure.ts#L5)
+[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/8559c04/src/types/Structure.ts#L5)
 
 ## Variables
 
-### MainContext
+### StateContext
 
-• `Const` **MainContext**: `Context`<{}\>
+• `Const` **StateContext**: `Context`<{}\>
 
 #### Defined in
 
-[src/context/MainContext.ts:4](https://github.com/guestbell/onboarder/blob/077a827/src/context/MainContext.ts#L4)
+src/context/StateContext.ts:4
 
 ## Functions
-
-### MainContextConsumer
-
-▸ **MainContextConsumer**(`props`): ``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-**NOTE**: Exotic components are not callable.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `props` | `ConsumerProps`<{}\> |
-
-#### Returns
-
-``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-#### Defined in
-
-node_modules/@types/react/index.d.ts:351
-
-___
-
-### MainContextProvider
-
-▸ **MainContextProvider**(`props`): ``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-**NOTE**: Exotic components are not callable.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `props` | `ProviderProps`<{}\> |
-
-#### Returns
-
-``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
-
-#### Defined in
-
-node_modules/@types/react/index.d.ts:351
-
-___
 
 ### Onboarder
 
@@ -369,4 +326,68 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:28](https://github.com/guestbell/onboarder/blob/077a827/src/components/onboarder/Onboarder.tsx#L28)
+[src/components/onboarder/Onboarder.tsx:28](https://github.com/guestbell/onboarder/blob/8559c04/src/components/onboarder/Onboarder.tsx#L28)
+
+___
+
+### StateContextConsumer
+
+▸ **StateContextConsumer**(`props`): ``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
+
+**NOTE**: Exotic components are not callable.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `props` | `ConsumerProps`<{}\> |
+
+#### Returns
+
+``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
+
+#### Defined in
+
+node_modules/@types/react/index.d.ts:351
+
+___
+
+### StateContextProvider
+
+▸ **StateContextProvider**(`props`): ``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
+
+**NOTE**: Exotic components are not callable.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `props` | `ProviderProps`<{}\> |
+
+#### Returns
+
+``null`` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
+
+#### Defined in
+
+node_modules/@types/react/index.d.ts:351
+
+___
+
+### useGlobalState
+
+▸ **useGlobalState**<`TState`\>(): `TState`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TState` | extends `Object` |
+
+#### Returns
+
+`TState`
+
+#### Defined in
+
+src/context/StateContext.ts:9
