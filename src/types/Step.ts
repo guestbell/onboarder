@@ -32,8 +32,7 @@ export type Step<TState extends {}, TStepState, TExtraStepProps extends {}> = {
   initialState?: TStepState;
   afterNext?: HookType<TState, TStepState, void>;
   beforeNext?: HookType<TState, TStepState, boolean>;
-  title?: React.ReactNode;
-  subtitle?: React.ReactNode;
+  timeRequiredSec?: number;
 } & TExtraStepProps;
 
 export type Steps<TState extends {}, TExtraStepProps extends {} = {}> = {

@@ -11,12 +11,14 @@ import ArrowForward from "@mui/icons-material/ArrowRightAlt";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import { IconButton } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { duration } from "dayjs";
 
 export interface StepContainerProps {}
 
 export type ExtraStepProps = {
   hideUi?: boolean;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
 };
 
 function FancyStepContainer<TState extends {}>(
@@ -38,15 +40,20 @@ function FancyStepContainer<TState extends {}>(
     currentStep,
     shortestStepsRemaining,
     shortestRemainingJourney,
+    remainingTimeSec,
   } = props;
   const lookedUpJourney = React.useMemo(
     () => journey.map((a) => steps[a]),
     [journey, steps]
   );
   const lookedUpShortestRemainingJourney = React.useMemo(
-    () => shortestRemainingJourney.slice(1).map((a) => steps[a]),
+    () => shortestRemainingJourney.map((a) => steps[a]),
     [journey, steps]
   );
+  const lookedUpSteps = [
+    ...lookedUpJourney,
+    ...lookedUpShortestRemainingJourney,
+  ];
   const currentStepInstance = steps[currentStep];
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100vw">
@@ -54,7 +61,6 @@ function FancyStepContainer<TState extends {}>(
         <Box
           component="aside"
           width={240}
-          padding={1}
           bgcolor="#F8F8F8"
           alignItems="center"
           display="flex"
@@ -62,35 +68,34 @@ function FancyStepContainer<TState extends {}>(
           overflow="auto"
           zIndex={2}
         >
-          <Stepper activeStep={journeyPosition} orientation="vertical">
-            {lookedUpJourney.map((step, index) => (
-              <Step key={index}>
+          <Stepper
+            activeStep={journeyPosition}
+            orientation="vertical"
+            connector={<div />}
+            sx={{ width: "100%" }}
+          >
+            {lookedUpSteps.map((step, index) => (
+              <Step
+                key={index}
+                sx={{
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                  backgroundColor:
+                    index === journeyPosition ? "#D1EAF6" : undefined,
+                }}
+              >
                 {step.title && (
                   <StepLabel
                     optional={
                       step.subtitle && (
-                        <Typography variant="caption">
+                        <Typography variant="caption" color="inherit">
                           {step.subtitle}
                         </Typography>
                       )
                     }
-                  >
-                    {step.title}
-                  </StepLabel>
-                )}
-              </Step>
-            ))}
-            {lookedUpShortestRemainingJourney.map((step, index) => (
-              <Step key={index}>
-                {step.title && (
-                  <StepLabel
-                    optional={
-                      step.subtitle && (
-                        <Typography variant="caption">
-                          {step.subtitle}
-                        </Typography>
-                      )
-                    }
+                    sx={{
+                      color: index !== journeyPosition ? "#D1EAF6" : undefined,
+                    }}
                   >
                     {step.title}
                   </StepLabel>
@@ -143,6 +148,13 @@ function FancyStepContainer<TState extends {}>(
                   <KeyboardArrowRight />
                 </IconButton>
               </Typography>
+              <br />
+              {remainingTimeSec ? (
+                <Typography variant="caption">
+                  Around {duration(remainingTimeSec, "second").humanize()} to
+                  finish
+                </Typography>
+              ) : null}
               <Typography variant="h3">{currentStepInstance.title}</Typography>
               {currentStepInstance.subtitle && (
                 <Typography variant="subtitle1">

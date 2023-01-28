@@ -15,7 +15,6 @@ function SimpleStepContainer<TState extends {}>(
     hasRedoStep,
     goToRedoStep,
     reset,
-    steps,
   } = props;
   return (
     <div>

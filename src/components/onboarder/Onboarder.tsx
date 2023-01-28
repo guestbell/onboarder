@@ -8,7 +8,6 @@ import JSONDebugger from "../../components/debug/JSONDebugger";
 import { Steps } from "../../types/Step";
 import { Structure } from "../../types/Structure";
 import { findShortestPathMultipleEndNodes, Graph } from "../../utils/dijkstra";
-import { ContainerProps } from "@mui/material";
 
 export interface OnboarderProps<TState extends {}, TExtraStepProps extends {}> {
   steps: Steps<TState, TExtraStepProps>;
@@ -26,9 +25,10 @@ type Setters<T> = {
 
 export type ResetAction = { type: "reset"; value: never };
 
-export function Onboarder<TState extends {}, TExtraStepProps extends {}>(
-  props: OnboarderProps<TState, TExtraStepProps>
-) {
+export function Onboarder<
+  TState extends {} = {},
+  TExtraStepProps extends {} = {}
+>(props: OnboarderProps<TState, TExtraStepProps>) {
   const {
     steps,
     initialStep,
@@ -155,6 +155,13 @@ export function Onboarder<TState extends {}, TExtraStepProps extends {}>(
       ),
     [journey[journey.length - 1], finalSteps, structure, state]
   );
+  const remainingTimeSec = React.useMemo(
+    () =>
+      shortestPath.path
+        .map((p) => steps[p].timeRequiredSec ?? 0)
+        .reduce((prev, current) => prev + current, 0),
+    [shortestPath]
+  );
   const sharedProps: StepContainerComponentProps<TState, TExtraStepProps> = {
     currentStep,
     hasNextStep,
@@ -173,6 +180,7 @@ export function Onboarder<TState extends {}, TExtraStepProps extends {}>(
     finalSteps,
     shortestStepsRemaining: shortestPath?.distance,
     shortestRemainingJourney: shortestPath.path,
+    remainingTimeSec,
   };
   return (
     <MainContextProvider value={state}>

@@ -99,7 +99,7 @@ export function findShortestPath<TState extends {} = {}>(
   // record the shortest path
   let shortestPath = [endNode];
   let parent = parents[endNode];
-  while (parent) {
+  while (parent && parent !== startNode) {
     shortestPath.push(parent);
     parent = parents[parent];
   }

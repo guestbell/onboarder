@@ -1,3 +1,5 @@
+@guestbell/onboarder / [Exports](modules.md)
+
 # Onboarder
 
 There are a lot of react steppers/wizards/onboarding libs out there. Onboarder is different:
@@ -197,4 +199,3 @@ Each step has a ```beforeNext``` async function. Use it to handle your logic. Re
 
 ## How do I clean up step state after navigation?
 Each step has a ```afterNext``` async function. Use it for cleanup.
-

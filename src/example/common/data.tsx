@@ -1,15 +1,7 @@
-import Button from "@mui/material/Button";
-import * as React from "react";
-import Onboarder, { Steps, Structure } from "../..";
-import FancyStepContainer, {
-  ExtraStepProps,
-} from "./stepContainer/FancyStepContainer";
+import React from "react";
+import { Steps, Structure } from "../..";
 
-export interface FancyProps {
-  debug?: boolean;
-}
-
-type OnboarderState = {
+export type ExampleOnboarderState = {
   firstStep: never;
   loopStep: { counter: number; isDirty: boolean; errorMessage?: string };
   afterLoopStep: never;
@@ -17,18 +9,8 @@ type OnboarderState = {
   finalStep: never;
 };
 
-const steps: Steps<OnboarderState, ExtraStepProps> = {
-  firstStep: {
-    Component: ({ goToNextStep }) => (
-      <>
-        First step<Button onClick={goToNextStep}>Get started</Button>
-      </>
-    ),
-    title: "First step",
-    subtitle: "Default UI hidden",
-    hideUi: true,
-    timeRequiredSec: 15,
-  },
+export const exampleSteps: Steps<ExampleOnboarderState> = {
+  firstStep: { Component: () => <>First step</> },
   loopStep: {
     Component: ({ setState, state }) => (
       <>
@@ -60,18 +42,13 @@ const steps: Steps<OnboarderState, ExtraStepProps> = {
       }
       return true;
     },
-    title: "Loop step",
-    timeRequiredSec: 25,
   },
   afterLoopStep: {
-    title: "After loop step",
     Component: ({ nextStep }) => (
       <>{nextStep === "loopStep" ? "We are looping" : "We're done looping."}</>
     ),
-    timeRequiredSec: 10,
   },
   textStep: {
-    title: "Text step",
     Component: ({ setState, state }) => (
       <>
         <input
@@ -85,42 +62,24 @@ const steps: Steps<OnboarderState, ExtraStepProps> = {
     initialState: {
       message: "",
     },
-    timeRequiredSec: 42,
   },
   finalStep: {
-    title: "Final step",
     Component: () => <>All done!!!</>,
-    timeRequiredSec: 13,
   },
 };
 
-const finalSteps: (keyof OnboarderState)[] = ["finalStep"];
-
-const structure: Structure<OnboarderState> = {
+export const exampleStructure: Structure<ExampleOnboarderState> = {
   firstStep: () => ({ loopStep: 1 }),
-  loopStep: (state) => ({ afterLoopStep: state.loopStep.isDirty ? 1 : null }),
+  loopStep: (state) => ({
+    afterLoopStep: state.loopStep.isDirty ? 1 : undefined,
+  }),
   afterLoopStep: (state) => ({
-    loopStep: state.loopStep?.counter < 3 ? 1 : null,
-    textStep: state.loopStep?.counter >= 3 ? 1 : null,
+    loopStep: state.loopStep?.counter < 3 ? 1 : undefined,
+    textStep: state.loopStep?.counter >= 3 ? 1 : undefined,
   }),
   textStep: (state) => ({
-    finalStep: (state.textStep?.message && 1) || null,
+    finalStep: (state.textStep?.message && 1) || undefined,
   }),
 };
 
-export const Fancy: React.FC<FancyProps> = ({ debug }) => {
-  return (
-    <>
-      <Onboarder
-        steps={steps}
-        initialStep="firstStep"
-        finalSteps={finalSteps}
-        structure={structure}
-        StepContainer={FancyStepContainer}
-        debug={debug}
-      />
-    </>
-  );
-};
-
-export default Fancy;
+export const exampleFinalSteps: (keyof ExampleOnboarderState)[] = ["finalStep"];
