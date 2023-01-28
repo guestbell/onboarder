@@ -13,7 +13,7 @@ export interface OnboarderProps<TState extends {}, TExtraStepProps extends {}> {
   steps: Steps<TState, TExtraStepProps>;
   initialStep: keyof TState;
   finalSteps: (keyof TState)[];
-  structure: Structure<TState>;
+  structure?: Structure<TState>;
   StepContainer?: StepContainerComponent<TState>;
   // to be removed
   debug?: boolean;
@@ -147,18 +147,21 @@ export function Onboarder<
   const shortestPath = React.useMemo(
     () =>
       findShortestPathMultipleEndNodes(
-        (Object.keys(structure) as (keyof TState)[]).reduce((prev, current) => {
-          const val: { [key in keyof TState]?: number | null } =
-            structure[current]?.(state) ?? {};
+        (Object.keys(structure ?? {}) as (keyof TState)[]).reduce(
+          (prev, current) => {
+            const val: { [key in keyof TState]?: number | null } =
+              structure?.[current]?.(state) ?? {};
 
-          return {
-            ...prev,
-            [current]: (Object.keys(val) as (keyof TState)[]).reduce(
-              (prev, current) => ({ ...prev, [current]: val[current] ?? 1 }),
-              {}
-            ),
-          };
-        }, {} as Graph<TState>),
+            return {
+              ...prev,
+              [current]: (Object.keys(val) as (keyof TState)[]).reduce(
+                (prev, current) => ({ ...prev, [current]: val[current] ?? 1 }),
+                {}
+              ),
+            };
+          },
+          {} as Graph<TState>
+        ),
         journey[journey.length - 1],
         finalSteps
       ),
