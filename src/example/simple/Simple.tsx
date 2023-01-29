@@ -14,7 +14,7 @@ export interface SimpleProps {
 
 export const Simple: React.FC<SimpleProps> = ({ debug }) => {
   return (
-    <Onboarder
+    <Onboarder<ExampleOnboarderState>
       steps={exampleSteps}
       initialStep="firstStep"
       finalSteps={exampleFinalSteps}

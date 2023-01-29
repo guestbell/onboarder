@@ -8,15 +8,12 @@
 
 - [default](modules.md#default)
 
-### Interfaces
-
-- [OnboarderProps](interfaces/OnboarderProps.md)
-
 ### Type Aliases
 
 - [HookConfig](modules.md#hookconfig)
 - [HookType](modules.md#hooktype)
 - [NextStepFunc](modules.md#nextstepfunc)
+- [OnboarderProps](modules.md#onboarderprops)
 - [ResetAction](modules.md#resetaction)
 - [Step](modules.md#step)
 - [StepComponent](modules.md#stepcomponent)
@@ -65,7 +62,7 @@ Renames and re-exports [Onboarder](modules.md#onboarder)
 
 #### Defined in
 
-[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L21)
+[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L21)
 
 ___
 
@@ -97,7 +94,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L26)
+[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L26)
 
 ___
 
@@ -128,7 +125,36 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Structure.ts#L1)
+[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Structure.ts#L1)
+
+___
+
+### OnboarderProps
+
+Ƭ **OnboarderProps**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TState` | extends `Object` |
+| `TExtraStepProps` | extends `Object` = {} |
+| `TExtraStepContainerProps` | extends `Object` = {} |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `StepContainer?` | [`StepContainerComponent`](modules.md#stepcontainercomponent)<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\> |
+| `debug?` | `boolean` |
+| `finalSteps` | keyof `TState`[] |
+| `initialStep` | keyof `TState` |
+| `steps` | [`Steps`](modules.md#steps)<`TState`, `TExtraStepProps`\> |
+| `structure?` | [`Structure`](modules.md#structure)<`TState`\> |
+
+#### Defined in
+
+[src/components/onboarder/Onboarder.tsx:12](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L12)
 
 ___
 
@@ -145,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:26](https://github.com/guestbell/onboarder/blob/cd32abf/src/components/onboarder/Onboarder.tsx#L26)
+[src/components/onboarder/Onboarder.tsx:34](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L34)
 
 ___
 
@@ -163,7 +189,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L30)
+[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L30)
 
 ___
 
@@ -181,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L13)
+[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L13)
 
 ___
 
@@ -199,13 +225,13 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L4)
+[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L4)
 
 ___
 
 ### StepContainerComponent
 
-Ƭ **StepContainerComponent**<`TState`, `TExtraStepProps`\>: `React.ComponentType`<[`StepContainerComponentProps`](modules.md#stepcontainercomponentprops)<`TState`, `TExtraStepProps`\>\>
+Ƭ **StepContainerComponent**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>: `React.ComponentType`<[`StepContainerComponentProps`](modules.md#stepcontainercomponentprops)<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>\>
 
 #### Type parameters
 
@@ -213,16 +239,17 @@ ___
 | :------ | :------ |
 | `TState` | extends `Object` |
 | `TExtraStepProps` | extends `Object` = {} |
+| `TExtraStepContainerProps` | extends `Object` = {} |
 
 #### Defined in
 
-[src/types/StepContainer.ts:27](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/StepContainer.ts#L27)
+[src/types/StepContainer.ts:28](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/StepContainer.ts#L28)
 
 ___
 
 ### StepContainerComponentProps
 
-Ƭ **StepContainerComponentProps**<`TState`, `TExtraStepProps`\>: `Object`
+Ƭ **StepContainerComponentProps**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>: `TExtraStepContainerProps` & { `currentStep`: keyof `TState` ; `finalSteps`: keyof `TState`[] ; `goToNextStep`: () => `void` ; `goToRedoStep`: () => `void` ; `goToStep`: (`step`: keyof `TState`) => `void` ; `goToUndoStep`: () => `void` ; `hasNextStep`: `boolean` ; `hasRedoStep`: `boolean` ; `hasUndoStep`: `boolean` ; `initialStep`: keyof `TState` ; `journey`: keyof `TState`[] ; `journeyPosition`: `number` ; `nextStep`: keyof `TState` \| `undefined` ; `remainingTimeSec`: `number` ; `reset`: () => `void` ; `shortestRemainingJourney`: keyof `TState`[] ; `shortestStepsRemaining`: `number` ; `steps`: [`Steps`](modules.md#steps)<`TState`, `TExtraStepProps`\>  }
 
 #### Type parameters
 
@@ -230,33 +257,11 @@ ___
 | :------ | :------ |
 | `TState` | extends `Object` |
 | `TExtraStepProps` | extends `Object` = {} |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `currentStep` | keyof `TState` |
-| `finalSteps` | keyof `TState`[] |
-| `goToNextStep` | () => `void` |
-| `goToRedoStep` | () => `void` |
-| `goToStep` | (`step`: keyof `TState`) => `void` |
-| `goToUndoStep` | () => `void` |
-| `hasNextStep` | `boolean` |
-| `hasRedoStep` | `boolean` |
-| `hasUndoStep` | `boolean` |
-| `initialStep` | keyof `TState` |
-| `journey` | keyof `TState`[] |
-| `journeyPosition` | `number` |
-| `nextStep` | keyof `TState` \| `undefined` |
-| `remainingTimeSec` | `number` |
-| `reset` | () => `void` |
-| `shortestRemainingJourney` | keyof `TState`[] |
-| `shortestStepsRemaining` | `number` |
-| `steps` | [`Steps`](modules.md#steps)<`TState`, `TExtraStepProps`\> |
+| `TExtraStepContainerProps` | extends `Object` = {} |
 
 #### Defined in
 
-[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/StepContainer.ts#L3)
+[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/StepContainer.ts#L3)
 
 ___
 
@@ -273,7 +278,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Step.ts#L38)
+[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L38)
 
 ___
 
@@ -289,7 +294,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/cd32abf/src/types/Structure.ts#L5)
+[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Structure.ts#L5)
 
 ## Variables
 
@@ -299,13 +304,13 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/cd32abf/src/context/StateContext.ts#L4)
+[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/a0f2726/src/context/StateContext.ts#L4)
 
 ## Functions
 
 ### Onboarder
 
-▸ **Onboarder**<`TState`, `TExtraStepProps`\>(`props`): `Element`
+▸ **Onboarder**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>(`props`): `Element`
 
 #### Type parameters
 
@@ -313,12 +318,13 @@ ___
 | :------ | :------ |
 | `TState` | extends `Object` = {} |
 | `TExtraStepProps` | extends `Object` = {} |
+| `TExtraStepContainerProps` | extends `Object` = {} |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `props` | [`OnboarderProps`](interfaces/OnboarderProps.md)<`TState`, `TExtraStepProps`\> |
+| `props` | [`OnboarderProps`](modules.md#onboarderprops)<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\> & `TExtraStepContainerProps` |
 
 #### Returns
 
@@ -326,7 +332,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:28](https://github.com/guestbell/onboarder/blob/cd32abf/src/components/onboarder/Onboarder.tsx#L28)
+[src/components/onboarder/Onboarder.tsx:40](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L40)
 
 ___
 
@@ -390,4 +396,4 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/cd32abf/src/context/StateContext.ts#L9)
+[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/a0f2726/src/context/StateContext.ts#L9)

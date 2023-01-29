@@ -1,3 +1,4 @@
+import * as React from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -5,7 +6,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
 import Onboarder, { Steps, Structure, useGlobalState } from "../..";
 import { CustomList } from "../material-ui/CustomList";
 import FancyStepContainer, {
@@ -212,7 +212,7 @@ const structure: Structure<OnboarderState> = {
 export const Fancy: React.FC<FancyProps> = ({ debug }) => {
   return (
     <>
-      <Onboarder
+      <Onboarder<OnboarderState, ExtraStepProps>
         steps={steps}
         initialStep="firstStep"
         finalSteps={finalSteps}

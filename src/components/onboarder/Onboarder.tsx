@@ -9,15 +9,23 @@ import { Steps } from "../../types/Step";
 import { Structure } from "../../types/Structure";
 import { findShortestPathMultipleEndNodes, Graph } from "../../utils/dijkstra";
 
-export interface OnboarderProps<TState extends {}, TExtraStepProps extends {}> {
+export type OnboarderProps<
+  TState extends {},
+  TExtraStepProps extends {} = {},
+  TExtraStepContainerProps extends {} = {}
+> = {
   steps: Steps<TState, TExtraStepProps>;
   initialStep: keyof TState;
   finalSteps: (keyof TState)[];
   structure?: Structure<TState>;
-  StepContainer?: StepContainerComponent<TState>;
+  StepContainer?: StepContainerComponent<
+    TState,
+    TExtraStepProps,
+    TExtraStepContainerProps
+  >;
   // to be removed
   debug?: boolean;
-}
+};
 
 type Setters<T> = {
   [P in keyof T]-?: T[P];
@@ -25,10 +33,18 @@ type Setters<T> = {
 
 export type ResetAction = { type: "reset"; value?: never };
 
+const DefaultStepContainer: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => <>{children}</>;
+
 export function Onboarder<
   TState extends {} = {},
-  TExtraStepProps extends {} = {}
->(props: OnboarderProps<TState, TExtraStepProps>) {
+  TExtraStepProps extends {} = {},
+  TExtraStepContainerProps extends {} = {}
+>(
+  props: OnboarderProps<TState, TExtraStepProps, TExtraStepContainerProps> &
+    TExtraStepContainerProps
+) {
   const {
     steps,
     initialStep,
@@ -36,6 +52,7 @@ export function Onboarder<
     structure,
     StepContainer,
     debug = false,
+    ...rest
   } = props;
   const [currentStep, setCurrentStep] = React.useState(initialStep);
   const [journey, setJourney] = React.useState<(keyof TState)[]>([initialStep]);
@@ -143,7 +160,7 @@ export function Onboarder<
     setJourney([initialStep]);
     dispatch({ type: "reset" });
   }, [initialStep]);
-  const StepContainerFinal = StepContainer ?? React.Fragment;
+  const StepContainerFinal = StepContainer ?? DefaultStepContainer;
   const shortestPath = React.useMemo(
     () =>
       findShortestPathMultipleEndNodes(
@@ -196,7 +213,10 @@ export function Onboarder<
   };
   return (
     <StateContextProvider value={state}>
-      <StepContainerFinal {...sharedProps}>
+      <StepContainerFinal
+        {...sharedProps}
+        {...(rest as unknown as TExtraStepContainerProps)}
+      >
         <CurrentComponent
           state={state[currentStep]}
           setState={setState}

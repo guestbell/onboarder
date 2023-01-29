@@ -2,8 +2,9 @@ import { Steps } from "./Step";
 
 export type StepContainerComponentProps<
   TState extends {},
-  TExtraStepProps extends {} = {}
-> = {
+  TExtraStepProps extends {} = {},
+  TExtraStepContainerProps extends {} = {}
+> = TExtraStepContainerProps & {
   currentStep: keyof TState;
   goToStep: (step: keyof TState) => void;
   hasNextStep: boolean;
@@ -26,5 +27,8 @@ export type StepContainerComponentProps<
 
 export type StepContainerComponent<
   TState extends {},
-  TExtraStepProps extends {} = {}
-> = React.ComponentType<StepContainerComponentProps<TState, TExtraStepProps>>;
+  TExtraStepProps extends {} = {},
+  TExtraStepContainerProps extends {} = {}
+> = React.ComponentType<
+  StepContainerComponentProps<TState, TExtraStepProps, TExtraStepContainerProps>
+>;
