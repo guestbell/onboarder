@@ -209,7 +209,8 @@ export function Onboarder<
     finalSteps,
     shortestStepsRemaining: shortestPath?.distance,
     shortestRemainingJourney: shortestPath.path,
-    remainingTimeSec,
+    remainingTimeSec:
+      remainingTimeSec + (currentStepInstance?.timeRequiredSec ?? 0),
   };
   return (
     <StateContextProvider value={state}>

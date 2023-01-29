@@ -62,7 +62,7 @@ Renames and re-exports [Onboarder](modules.md#onboarder)
 
 #### Defined in
 
-[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L21)
+[src/types/Step.ts:21](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L21)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L26)
+[src/types/Step.ts:26](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L26)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Structure.ts#L1)
+[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Structure.ts#L1)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:12](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L12)
+[src/components/onboarder/Onboarder.tsx:12](https://github.com/guestbell/onboarder/blob/d6a2263/src/components/onboarder/Onboarder.tsx#L12)
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:34](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L34)
+[src/components/onboarder/Onboarder.tsx:34](https://github.com/guestbell/onboarder/blob/d6a2263/src/components/onboarder/Onboarder.tsx#L34)
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L30)
+[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L30)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L13)
+[src/types/Step.ts:13](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L13)
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L4)
+[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L4)
 
 ___
 
@@ -243,7 +243,7 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:28](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/StepContainer.ts#L28)
+[src/types/StepContainer.ts:28](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/StepContainer.ts#L28)
 
 ___
 
@@ -261,7 +261,7 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/StepContainer.ts#L3)
+[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/StepContainer.ts#L3)
 
 ___
 
@@ -278,7 +278,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Step.ts#L38)
+[src/types/Step.ts:38](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Step.ts#L38)
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/a0f2726/src/types/Structure.ts#L5)
+[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/d6a2263/src/types/Structure.ts#L5)
 
 ## Variables
 
@@ -304,7 +304,7 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/a0f2726/src/context/StateContext.ts#L4)
+[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/d6a2263/src/context/StateContext.ts#L4)
 
 ## Functions
 
@@ -332,7 +332,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:40](https://github.com/guestbell/onboarder/blob/a0f2726/src/components/onboarder/Onboarder.tsx#L40)
+[src/components/onboarder/Onboarder.tsx:40](https://github.com/guestbell/onboarder/blob/d6a2263/src/components/onboarder/Onboarder.tsx#L40)
 
 ___
 
@@ -396,4 +396,4 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/a0f2726/src/context/StateContext.ts#L9)
+[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/d6a2263/src/context/StateContext.ts#L9)
