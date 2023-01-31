@@ -1,6 +1,6 @@
 {
   "name": "@guestbell/onboarder",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Nonlinear user onboarding done in react. Think state machine forms - steps in any order",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
