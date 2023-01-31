@@ -4,12 +4,11 @@
 
 There are a lot of react steppers/wizards/onboarding libs out there. Onboarder is different:
 
-- Tiny - <2kb gzip
-- Non-linear - Jump between steps
+- [Tiny](https://bundlephobia.com/result?p=@guestbell/onboarder@latest)
+- Non-linear - Jump between steps, lib predicts rest of the way and time taken
 - 0 dependencies - Build your UI or use our
 - Easy setup
 - Typed API
-- Calculates time remaining and remaining steps - not so easy with non-linear steps, right? :)
 
 # Install
 
@@ -23,11 +22,11 @@ or
 yarn add @guestbell/onboarder
 ```
 
-# See it in action
+## Demo
 
 [Complex UI](https://guestbell.github.io/onboarder/?path=/story/fancy--default) or [Simple example](https://guestbell.github.io/onboarder/?path=/story/simple--default)
 
-# Getting started
+## Getting started
 
 Following example will show you how to create wizard with:
 - Loop step (exit loop based on rules)
@@ -187,15 +186,31 @@ function SimpleStepContainer<TState extends {}>(
 7. Done!
 You can see this example on [github](https://github.com/guestbell/onboarder/blob/main/src/example/simple/Simple.tsx)
 
-# API
+## API
 [Here](https://github.com/guestbell/onboarder/blob/main/api-docs/modules.md)
 
-# FAQ
-## How can I add my extra props to the step?
+## FAQ
+### How can I add my extra props to the step?
 Notice that ```Steps``` has 2 generic parameters. First is the type of the state, you can use the second generic parameter to introduce extra props to your step.
 
-## How can I fire an action before going to next step?
+### How can I fire an action before going to next step?
 Each step has a ```beforeNext``` async function. Use it to handle your logic. Return false if the navigation should be prevented.
 
-## How do I clean up step state after navigation?
+### How do I clean up step state after navigation?
 Each step has a ```afterNext``` async function. Use it for cleanup.
+
+## Created and sponsored by
+
+- [GuestBell](https://guestbell.com/) - Customer centric online POS for Hotels and short terms stays.
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+## License
+
+MIT
