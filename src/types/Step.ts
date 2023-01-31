@@ -1,13 +1,17 @@
 import React from "react";
 import { StepContainerComponentProps } from "./StepContainer";
 
+export type SetState<TStepState> = (
+  state: TStepState | ((state: TStepState) => TStepState)
+) => void;
+
 export type StepComponentProps<
   TState extends {},
   TStepState,
   TExtraStepProps extends {} = {}
 > = StepContainerComponentProps<TState, TExtraStepProps> & {
   state: TStepState;
-  setState: (state: TStepState) => void;
+  setState: SetState<TStepState>;
 };
 
 export type StepComponent<
@@ -20,7 +24,7 @@ export type StepComponent<
 
 export type HookConfig<TState extends {}, TStepState> = {
   state: TStepState;
-  setState: (state: TStepState) => void;
+  setState: SetState<TStepState>;
 };
 
 export type HookType<TState extends {}, TStepState, TRet> = (

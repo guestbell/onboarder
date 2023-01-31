@@ -121,28 +121,28 @@ const steps: Steps<OnboarderState, ExtraStepProps> = {
   textStep: {
     title: "Text step",
     subtitle: "Leave us a message",
-    Component: ({ setState, state }) => (
+    Component: ({ setState, state: { message } }) => (
       <>
         <CustomList>
           <ListItem
             secondaryAction={
               <TextField
-                error={!Boolean(state.message)}
-                value={state.message}
+                error={!Boolean(message)}
+                value={message}
                 onChange={(e) =>
-                  setState({ ...state, message: e.target.value })
+                  setState((prev) => ({ ...prev, message: e.target.value }))
                 }
                 variant="standard"
                 required={true}
                 helperText={
-                  !Boolean(state.message) ? "Message is required" : undefined
+                  !Boolean(message) ? "Message is required" : undefined
                 }
               />
             }
           >
             <ListItemText
               primary="*Simple text field"
-              secondary={`Message from state: ${state.message}`}
+              secondary={`Message from state: ${message}`}
             />
           </ListItem>
         </CustomList>

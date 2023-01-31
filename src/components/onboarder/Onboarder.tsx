@@ -5,7 +5,7 @@ import {
 import * as React from "react";
 import { StateContextProvider } from "../../context/StateContext";
 import JSONDebugger from "../../components/debug/JSONDebugger";
-import { Steps } from "../../types/Step";
+import { SetState, Steps } from "../../types/Step";
 import { Structure } from "../../types/Structure";
 import { findShortestPathMultipleEndNodes, Graph } from "../../utils/dijkstra";
 
@@ -25,10 +25,6 @@ export type OnboarderProps<
   >;
   // to be removed
   debug?: boolean;
-};
-
-type Setters<T> = {
-  [P in keyof T]-?: T[P];
 };
 
 export type ResetAction = { type: "reset"; value?: never };
@@ -57,11 +53,10 @@ export function Onboarder<
   const [currentStep, setCurrentStep] = React.useState(initialStep);
   const [journey, setJourney] = React.useState<(keyof TState)[]>([initialStep]);
   const [journeyPosition, setJourneyPosition] = React.useState(0);
-  type ItemSetters = Setters<TState>;
   type ActionsMap = {
-    [S in keyof ItemSetters]: {
+    [S in keyof TState]: {
       type: S;
-      value: ItemSetters[S];
+      value: SetState<TState[S]>;
     };
   };
   type ItemActions = ActionsMap[keyof ActionsMap] | ResetAction;
@@ -78,8 +73,15 @@ export function Onboarder<
   );
   const [state, dispatch] = React.useReducer(
     (state: TState, action: ItemActions) => {
-      if (Object.keys(state).some((s) => s === action.type)) {
-        return { ...state, [action.type]: action.value };
+      if (
+        (Object.keys(state) as (keyof TState)[]).some((s) => s === action.type)
+      ) {
+        const actionType = action.type as keyof TState;
+        const handledState =
+          action.value instanceof Function
+            ? action.value(state[actionType])
+            : action.value;
+        return { ...state, [action.type]: handledState };
       } else if (action.type === "reset") {
         return initialState;
       }
@@ -90,9 +92,10 @@ export function Onboarder<
   const selectedState = state[currentStep];
   const currentStepInstance = steps[currentStep];
   const CurrentComponent = currentStepInstance.Component;
-  const setState = React.useCallback(
-    (_state: TState[typeof currentStep]) =>
-      dispatch({ type: currentStep, value: _state }),
+  const setState = React.useCallback<SetState<any>>(
+    (_state) => {
+      dispatch({ type: currentStep, value: _state });
+    },
     [currentStep]
   );
   const nextSteps: { [key in keyof TState]?: number | null } =
@@ -119,7 +122,7 @@ export function Onboarder<
         const possibleRet =
           currentStepInstance?.beforeNext?.({
             state: selectedState,
-            setState: setState,
+            setState,
           }) ?? true;
         Promise.resolve(possibleRet).then((ret) => {
           if (ret) {
@@ -128,7 +131,7 @@ export function Onboarder<
             setCurrentStep(step);
             currentStepInstance?.afterNext?.({
               state: selectedState,
-              setState: setState,
+              setState,
             });
           }
         });
