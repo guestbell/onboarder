@@ -194,7 +194,10 @@ export function Onboarder<
         .reduce((prev, current) => prev + current, 0),
     [shortestPath]
   );
-  const sharedProps: StepContainerComponentProps<TState, TExtraStepProps> = {
+  const sharedProps: Omit<
+    StepContainerComponentProps<TState, TExtraStepProps>,
+    "state"
+  > = {
     currentStep,
     hasNextStep,
     nextStep,
@@ -218,6 +221,7 @@ export function Onboarder<
   return (
     <StateContextProvider value={state}>
       <StepContainerFinal
+        state={state}
         {...sharedProps}
         {...(rest as unknown as TExtraStepContainerProps)}
       >

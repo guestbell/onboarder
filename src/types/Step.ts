@@ -9,7 +9,7 @@ export type StepComponentProps<
   TState extends {},
   TStepState,
   TExtraStepProps extends {} = {}
-> = StepContainerComponentProps<TState, TExtraStepProps> & {
+> = Omit<StepContainerComponentProps<TState, TExtraStepProps>, "state"> & {
   state: TStepState;
   setState: SetState<TStepState>;
 };
