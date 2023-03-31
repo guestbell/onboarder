@@ -23,7 +23,6 @@ export type StepContainerComponentProps<
   shortestStepsRemaining: number;
   shortestRemainingJourney: (keyof TState)[];
   remainingTimeSec: number;
-  state: TState;
 };
 
 export type StepContainerComponent<
