@@ -71,14 +71,14 @@ export const exampleSteps: Steps<ExampleOnboarderState> = {
 export const exampleStructure: Structure<ExampleOnboarderState> = {
   firstStep: () => ({ loopStep: 1 }),
   loopStep: (state) => ({
-    afterLoopStep: state.loopStep.isDirty ? 1 : undefined,
+    afterLoopStep: state.loopStep.isDirty ? 1 : -1,
   }),
   afterLoopStep: (state) => ({
-    loopStep: state.loopStep?.counter < 3 ? 1 : undefined,
-    textStep: state.loopStep?.counter >= 3 ? 1 : undefined,
+    loopStep: state.loopStep?.counter < 3 ? 1 : -1,
+    textStep: state.loopStep?.counter >= 3 ? 1 : -2,
   }),
   textStep: (state) => ({
-    finalStep: (state.textStep?.message && 1) || undefined,
+    finalStep: (state.textStep?.message && 1) || -1,
   }),
 };
 

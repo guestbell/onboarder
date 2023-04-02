@@ -118,20 +118,20 @@ const steps: Steps<OnboarderState> = {
 const structure: Structure<OnboarderState> = {
   firstStep: () => ({ loopStep: 1 }),
   loopStep: (state) => ({
-    afterLoopStep: state.loopStep.isDirty ? 1 : undefined,
+    afterLoopStep: state.loopStep.isDirty ? 1 : -1,
   }),
   afterLoopStep: (state) => ({
-    loopStep: state.loopStep?.counter < 3 ? 1 : undefined,
-    textStep: state.loopStep?.counter >= 3 ? 1 : undefined,
+    loopStep: state.loopStep?.counter < 3 ? 1 : -1,
+    textStep: state.loopStep?.counter >= 3 ? 1 : -2,
   }),
   textStep: (state) => ({
-    finalStep: (state.textStep?.message && 1) || undefined,
+    finalStep: (state.textStep?.message && 1) || -1,
   }),
 };
 ```
 Notice how the object has same (optional) keys like our steps. Each gets passed a global state, and returns an object with same (optional) keys like our steps. Values of this object work like this:
-a) **Null** means the step is allowed, but disabled based on a condition
-b) **Number** means the step is allowed, actual number gives step priority, smaller number means higher priority
+a) **Negative Number or zero** means the step is allowed, but disabled based on a condition
+b) **Positive Number** means the step is allowed, actual number gives step priority, smaller number means higher priority
 c) **Undefined** or **key missing** means the step is never allowed 
 5. Put it all together
 ```tsx

@@ -98,10 +98,10 @@ export function Onboarder<
     },
     [currentStep]
   );
-  const nextSteps: { [key in keyof TState]?: number | null } =
+  const nextSteps: { [key in keyof TState]?: number } =
     structure?.[currentStep]?.(state) ?? {};
   const nextStepsKeys = (Object.keys(nextSteps) as (keyof TState)[]).filter(
-    (a) => nextSteps[a]
+    (a) => nextSteps[a] && nextSteps[a]! > 0
   );
   const nextStep = nextStepsKeys.length
     ? nextStepsKeys.reduce((a, b) => {
@@ -169,13 +169,16 @@ export function Onboarder<
       findShortestPathMultipleEndNodes(
         (Object.keys(structure ?? {}) as (keyof TState)[]).reduce(
           (prev, current) => {
-            const val: { [key in keyof TState]?: number | null } =
+            const val: { [key in keyof TState]?: number } =
               structure?.[current]?.(state) ?? {};
 
             return {
               ...prev,
               [current]: (Object.keys(val) as (keyof TState)[]).reduce(
-                (prev, current) => ({ ...prev, [current]: val[current] ?? 1 }),
+                (prev, current) => ({
+                  ...prev,
+                  [current]: val[current] && Math.abs(val[current]!),
+                }),
                 {}
               ),
             };

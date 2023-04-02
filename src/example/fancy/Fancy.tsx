@@ -199,13 +199,16 @@ const finalSteps: (keyof OnboarderState)[] = ["finalStep"];
 
 const structure: Structure<OnboarderState> = {
   firstStep: () => ({ loopStep: 1 }),
-  loopStep: (state) => ({ afterLoopStep: state.loopStep.isDirty ? 1 : null }),
+  loopStep: (state) => ({
+    afterLoopStep: state.loopStep.isDirty ? 1 : -1,
+    finalStep: state.loopStep.counter === 1 ? 1 : -Infinity,
+  }),
   afterLoopStep: (state) => ({
-    loopStep: state.loopStep?.counter < 3 ? 1 : null,
-    textStep: state.loopStep?.counter >= 3 ? 1 : null,
+    loopStep: state.loopStep?.counter < 3 ? 1 : -2,
+    textStep: state.loopStep?.counter >= 3 ? 1 : -2,
   }),
   textStep: (state) => ({
-    finalStep: (state.textStep?.message && 1) || null,
+    finalStep: (state.textStep?.message && 1) || -1,
   }),
 };
 
