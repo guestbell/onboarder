@@ -63,7 +63,7 @@ Renames and re-exports [Onboarder](modules.md#onboarder)
 
 #### Defined in
 
-[src/types/Step.ts:25](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L25)
+[src/types/Step.ts:25](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L25)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L30)
+[src/types/Step.ts:30](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L30)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/075046d/src/types/Structure.ts#L1)
+[src/types/Structure.ts:1](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Structure.ts#L1)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:12](https://github.com/guestbell/onboarder/blob/075046d/src/components/onboarder/Onboarder.tsx#L12)
+[src/components/onboarder/Onboarder.tsx:12](https://github.com/guestbell/onboarder/blob/963a77c/src/components/onboarder/Onboarder.tsx#L12)
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:30](https://github.com/guestbell/onboarder/blob/075046d/src/components/onboarder/Onboarder.tsx#L30)
+[src/components/onboarder/Onboarder.tsx:30](https://github.com/guestbell/onboarder/blob/963a77c/src/components/onboarder/Onboarder.tsx#L30)
 
 ___
 
@@ -202,7 +202,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L4)
+[src/types/Step.ts:4](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L4)
 
 ___
 
@@ -220,7 +220,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:34](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L34)
+[src/types/Step.ts:34](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L34)
 
 ___
 
@@ -238,7 +238,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:17](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L17)
+[src/types/Step.ts:17](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L17)
 
 ___
 
@@ -256,7 +256,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:8](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L8)
+[src/types/Step.ts:8](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L8)
 
 ___
 
@@ -274,13 +274,13 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:28](https://github.com/guestbell/onboarder/blob/075046d/src/types/StepContainer.ts#L28)
+[src/types/StepContainer.ts:29](https://github.com/guestbell/onboarder/blob/963a77c/src/types/StepContainer.ts#L29)
 
 ___
 
 ### StepContainerComponentProps
 
-Ƭ **StepContainerComponentProps**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>: `TExtraStepContainerProps` & { `currentStep`: keyof `TState` ; `finalSteps`: keyof `TState`[] ; `goToNextStep`: () => `void` ; `goToRedoStep`: () => `void` ; `goToStep`: (`step`: keyof `TState`) => `void` ; `goToUndoStep`: () => `void` ; `hasNextStep`: `boolean` ; `hasRedoStep`: `boolean` ; `hasUndoStep`: `boolean` ; `initialStep`: keyof `TState` ; `journey`: keyof `TState`[] ; `journeyPosition`: `number` ; `nextStep`: keyof `TState` \| `undefined` ; `remainingTimeSec`: `number` ; `reset`: () => `void` ; `shortestRemainingJourney`: keyof `TState`[] ; `shortestStepsRemaining`: `number` ; `steps`: [`Steps`](modules.md#steps)<`TState`, `TExtraStepProps`\>  }
+Ƭ **StepContainerComponentProps**<`TState`, `TExtraStepProps`, `TExtraStepContainerProps`\>: `TExtraStepContainerProps` & { `currentStep`: keyof `TState` ; `finalSteps`: keyof `TState`[] ; `getState`: () => `TState` ; `goToNextStep`: () => `void` ; `goToRedoStep`: () => `void` ; `goToStep`: (`step`: keyof `TState`) => `void` ; `goToUndoStep`: () => `void` ; `hasNextStep`: `boolean` ; `hasRedoStep`: `boolean` ; `hasUndoStep`: `boolean` ; `initialStep`: keyof `TState` ; `journey`: keyof `TState`[] ; `journeyPosition`: `number` ; `nextStep`: keyof `TState` \| `undefined` ; `remainingTimeSec`: `number` ; `reset`: () => `void` ; `shortestRemainingJourney`: keyof `TState`[] ; `shortestStepsRemaining`: `number` ; `steps`: [`Steps`](modules.md#steps)<`TState`, `TExtraStepProps`\>  }
 
 #### Type parameters
 
@@ -292,7 +292,7 @@ ___
 
 #### Defined in
 
-[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/075046d/src/types/StepContainer.ts#L3)
+[src/types/StepContainer.ts:3](https://github.com/guestbell/onboarder/blob/963a77c/src/types/StepContainer.ts#L3)
 
 ___
 
@@ -309,7 +309,7 @@ ___
 
 #### Defined in
 
-[src/types/Step.ts:42](https://github.com/guestbell/onboarder/blob/075046d/src/types/Step.ts#L42)
+[src/types/Step.ts:42](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Step.ts#L42)
 
 ___
 
@@ -325,7 +325,7 @@ ___
 
 #### Defined in
 
-[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/075046d/src/types/Structure.ts#L5)
+[src/types/Structure.ts:5](https://github.com/guestbell/onboarder/blob/963a77c/src/types/Structure.ts#L5)
 
 ## Variables
 
@@ -335,7 +335,7 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/075046d/src/context/StateContext.ts#L4)
+[src/context/StateContext.ts:4](https://github.com/guestbell/onboarder/blob/963a77c/src/context/StateContext.ts#L4)
 
 ## Functions
 
@@ -363,7 +363,7 @@ ___
 
 #### Defined in
 
-[src/components/onboarder/Onboarder.tsx:36](https://github.com/guestbell/onboarder/blob/075046d/src/components/onboarder/Onboarder.tsx#L36)
+[src/components/onboarder/Onboarder.tsx:36](https://github.com/guestbell/onboarder/blob/963a77c/src/components/onboarder/Onboarder.tsx#L36)
 
 ___
 
@@ -427,4 +427,4 @@ ___
 
 #### Defined in
 
-[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/075046d/src/context/StateContext.ts#L9)
+[src/context/StateContext.ts:9](https://github.com/guestbell/onboarder/blob/963a77c/src/context/StateContext.ts#L9)

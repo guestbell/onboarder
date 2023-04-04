@@ -89,6 +89,7 @@ export function Onboarder<
     },
     initialState
   );
+  const stateRef = React.useRef(state);
   const selectedState = state[currentStep];
   const currentStepInstance = steps[currentStep];
   const CurrentComponent = currentStepInstance.Component;
@@ -98,6 +99,9 @@ export function Onboarder<
     },
     [currentStep]
   );
+  const getState = React.useCallback(() => {
+    return stateRef.current;
+  }, []);
   const nextSteps: { [key in keyof TState]?: number } =
     structure?.[currentStep]?.(state) ?? {};
   const nextStepsKeys = (Object.keys(nextSteps) as (keyof TState)[]).filter(
@@ -217,6 +221,7 @@ export function Onboarder<
     shortestRemainingJourney: shortestPath.path,
     remainingTimeSec:
       remainingTimeSec + (currentStepInstance?.timeRequiredSec ?? 0),
+    getState,
   };
   return (
     <StateContextProvider value={state}>
